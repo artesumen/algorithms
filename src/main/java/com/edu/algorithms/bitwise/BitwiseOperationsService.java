@@ -12,7 +12,7 @@ public class BitwiseOperationsService {
      *  @param input integer arg
      * @return number of bits
      */
-    public short suboptimalCountBits(int input) {
+    public short countBits(int input) {
         short numOfBits = 0;
         while (input != 0) {
             numOfBits += input & 1; // Логическое "И" даст 1, если крайний правый бит = 1, иначе даст 0

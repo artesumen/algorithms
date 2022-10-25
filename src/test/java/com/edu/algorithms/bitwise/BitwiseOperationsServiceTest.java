@@ -15,7 +15,7 @@ class BitwiseOperationsServiceTest {
 
     @Test
     void suboptimalCountBits() {
-        Assertions.assertEquals(8, bitwiseOperationsService.suboptimalCountBits(BINARY_NUMBER_1));
+        Assertions.assertEquals(8, bitwiseOperationsService.countBits(BINARY_NUMBER_1));
     }
 
     @Test
