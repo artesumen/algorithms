@@ -15,7 +15,7 @@ class BitwiseOperationsServiceTest {
 
     @Test
     void suboptimalCountBits() {
-        Assertions.assertEquals(8, bitwiseOperationsService.countBits(BINARY_NUMBER_1));
+        Assertions.assertEquals(8, bitwiseOperationsService.suboptimalCountBits(BINARY_NUMBER_1));
     }
 
     @Test
@@ -28,5 +28,16 @@ class BitwiseOperationsServiceTest {
         System.out.println(1<<(5-1)); // 10000(2), 16(10), 5я позиция
         Assertions.assertTrue(bitwiseOperationsService.showBitOnThePosition(BINARY_NUMBER_0, 2));
         Assertions.assertFalse(bitwiseOperationsService.showBitOnThePosition(BINARY_NUMBER_0, 1));
+    }
+
+    @Test
+    void optimalCountBits() {
+        Assertions.assertEquals(8, bitwiseOperationsService.optimalCountBits(BINARY_NUMBER_1));
+    }
+
+    @Test
+    void parity() {
+        Assertions.assertEquals(1, bitwiseOperationsService.parityLooped(BINARY_NUMBER_0));
+        Assertions.assertEquals(0, bitwiseOperationsService.parityLooped(BINARY_NUMBER_1));
     }
 }
