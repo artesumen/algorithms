@@ -9,7 +9,7 @@ public class BitwiseOperationsService {
      * Counts the number of bits in integer
      * Time O(n); n - length of input
      *
-     *  @param input integer arg
+     * @param input integer arg
      * @return number of bits
      */
     public short suboptimalCountBits(int input) {
@@ -25,12 +25,12 @@ public class BitwiseOperationsService {
      * Counts the number of bits in integer
      * Time O(k); n - number of bits ('1's) in input9
      *
-     *  @param input integer arg
+     * @param input integer arg
      * @return number of bits
      */
-    public short optimalCountBits(int input){
+    public short optimalCountBits(int input) {
         short result = 0;
-        while(input != 0){
+        while (input != 0) {
             input = clearLowermostBit(input);
             result++;
         }
@@ -50,11 +50,11 @@ public class BitwiseOperationsService {
     /**
      * Builds a mask and gets a bit out of the input
      *
-     * @param input integer arg
+     * @param input    integer arg
      * @param position position to test
      * @return true if the bit was present on a position, false if not
      */
-    public boolean showBitOnThePosition(int input, int position){
+    public boolean showBitOnThePosition(int input, int position) {
         int mask = 1 << (position - 1); // Маска будет иметь единственный бит на указанной позиции
         return (input & mask) != 0;
     }
@@ -67,8 +67,8 @@ public class BitwiseOperationsService {
      * @param input integer arg
      * @return 0 if the nuber of bits is even, 1 otherwise
      */
-    public short parityLooped(long input){
-        for (int i = 32; i >=2 ; i/=2) {
+    public short parityLooped(long input) {
+        for (int i = 32; i >= 2; i /= 2) {
             input ^= input >>> i;
         }
         return (short) (input & 0x1);
@@ -82,7 +82,7 @@ public class BitwiseOperationsService {
      * @param input integer arg
      * @return 0 if the nuber of bits is even, 1 otherwise
      */
-    private short parity(long input){
+    public short parity(long input) {
         input ^= input >>> 32;
         input ^= input >>> 16;
         input ^= input >>> 8;
@@ -91,4 +91,42 @@ public class BitwiseOperationsService {
         input ^= input >>> 1;
         return (short) (input & 0x1);
     }
+
+    /**
+     * Swaps two bits in the ith and jth positions
+     *
+     * @param input 64-bit integer
+     * @param i     1st bit to swap
+     * @param j     2nd bit to swap
+     * @return integer with swapped bits
+     */
+    public long swapBits(long input, int i, int j) {
+        String s = Long.toBinaryString(input);
+        if (((input >>> i) & 1) != ((input >>> j) & 1)) { // Вытаскиваем биты на позициях i и j и сравниваем их
+            long bitMask = (1L << i) | (1L << j); // Маска содержит биты на тех местах, которые надо поменять
+            input ^= bitMask; // ХОР поменяет значение битов на противоположные
+            System.out.println(Long.toBinaryString(input));
+        }
+        return input;
+    }
+
+    /**
+     * Reverses bits in 32-bit integer
+     *
+     * @param input 32-bit integer
+     * @return reversed result
+     */
+    //todo: Check optimal solution on Leetcode
+    public int reverseBits(int input) {
+        int ans = 0;
+        for (int i = 0; i < 32; i++) {
+            int lsb = input & 1; // Находим самый правый бит
+            int temp = lsb << (31 - i); // двигаем бит на противоположную позицию (исходя из 32-битного входного числа)
+            ans = ans | temp; //запоминаем в ans
+            input = input >> 1; // Идем в следующий бит
+        }
+        System.out.println(Integer.toBinaryString(ans));
+        return ans;
+    }
+
 }

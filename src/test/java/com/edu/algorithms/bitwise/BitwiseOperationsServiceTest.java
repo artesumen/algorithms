@@ -12,6 +12,9 @@ class BitwiseOperationsServiceTest {
     private BitwiseOperationsService bitwiseOperationsService;
     private static final int BINARY_NUMBER_0 = 0b0001_0011_0010_1110;
     private static final int BINARY_NUMBER_1 = 0b0001_0011_0010_1111;
+    private static final int BINARY_NUMBER_1_SWAPPED = 0b0000_1011_0010_1111;
+
+    private static final int BINARY_NUMBER_1_REVERSED = Integer.reverse(BINARY_NUMBER_1);
 
     @Test
     void suboptimalCountBits() {
@@ -36,8 +39,24 @@ class BitwiseOperationsServiceTest {
     }
 
     @Test
-    void parity() {
+    void parityLooped() {
         Assertions.assertEquals(1, bitwiseOperationsService.parityLooped(BINARY_NUMBER_0));
         Assertions.assertEquals(0, bitwiseOperationsService.parityLooped(BINARY_NUMBER_1));
+    }
+
+    @Test
+    void parity() {
+        Assertions.assertEquals(1, bitwiseOperationsService.parity(BINARY_NUMBER_0));
+        Assertions.assertEquals(0, bitwiseOperationsService.parity(BINARY_NUMBER_1));
+    }
+
+    @Test
+    void swapBits() {
+        Assertions.assertEquals(BINARY_NUMBER_1_SWAPPED, bitwiseOperationsService.swapBits(BINARY_NUMBER_1,11,12));
+    }
+
+    @Test
+    void reverseBits() {
+        Assertions.assertEquals(BINARY_NUMBER_1_REVERSED,bitwiseOperationsService.reverseBits(BINARY_NUMBER_1));
     }
 }
