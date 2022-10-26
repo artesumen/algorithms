@@ -23,7 +23,7 @@ public class BitwiseOperationsService {
 
     /**
      * Counts the number of bits in integer
-     * Time O(k); n - number of bits ('1's) in input9
+     * Time O(k); n - number of bits ('1's) in input
      *
      * @param input integer arg
      * @return number of bits
@@ -127,6 +127,47 @@ public class BitwiseOperationsService {
         }
         System.out.println(Integer.toBinaryString(ans));
         return ans;
+    }
+
+    /**
+     * Finds the integer closest to input with the same number of bits
+     *
+     * @param input 64-bit int
+     * @return closest to input with the same number of bits
+     */
+    public long getClosestIntSameBitCount(long input) {
+        final int NUM_UNSIGNED_BITS = 63;
+        for (int i = 0; i < NUM_UNSIGNED_BITS - 1; i++) {
+            if (((input >>> i) & 1) != ((input >>> i + 1) & 1)) { // Ищем два неравных соседних бита начиная с LSB
+                input ^= (1L << i) | (1L << 1 + i); // Маска, с этими неравными битами
+                return input;
+            }
+        }
+        throw new RuntimeException("All bits are 1s or 0s");
+    }
+
+    /**
+     * Multiplies 2 integers with bitwise operations
+     *
+     * @param x 1st arg
+     * @param y 2nd arg
+     * @return product of x and y
+     */
+    //todo: Debug add method to clarify XOR operation. Debug shifting to clarify
+    public long multiply(long x, long y) {
+        long res = 0;
+        while (x != 0) {
+            if ((x & 1) != 0) { // Проходимся по битам 1го числа
+                res = add(res, y);
+            }
+            x >>>= 1;
+            y <<= 1;
+        }
+        return res;
+    }
+
+    private long add(long a, long b) {
+        return b == 0 ? a : add(a ^ b, (a & b) << 1);
     }
 
 }

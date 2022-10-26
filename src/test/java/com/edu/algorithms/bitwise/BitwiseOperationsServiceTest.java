@@ -12,6 +12,7 @@ class BitwiseOperationsServiceTest {
     private BitwiseOperationsService bitwiseOperationsService;
     private static final int BINARY_NUMBER_0 = 0b0001_0011_0010_1110;
     private static final int BINARY_NUMBER_1 = 0b0001_0011_0010_1111;
+    private static final int BINARY_NUMBER_1_CLOSEST = 0b0001_0011_0011_0111;
     private static final int BINARY_NUMBER_1_SWAPPED = 0b0000_1011_0010_1111;
 
     private static final int BINARY_NUMBER_1_REVERSED = Integer.reverse(BINARY_NUMBER_1);
@@ -58,5 +59,16 @@ class BitwiseOperationsServiceTest {
     @Test
     void reverseBits() {
         Assertions.assertEquals(BINARY_NUMBER_1_REVERSED,bitwiseOperationsService.reverseBits(BINARY_NUMBER_1));
+    }
+
+    @Test
+    void getClosestIntSameBitCount() {
+        Assertions.assertEquals(BINARY_NUMBER_1_CLOSEST,bitwiseOperationsService.getClosestIntSameBitCount(BINARY_NUMBER_1));
+    }
+
+    @Test
+    void multiply() {
+        Assertions.assertEquals(25, bitwiseOperationsService.multiply(5,5));
+        Assertions.assertEquals(625, bitwiseOperationsService.multiply(25,25));
     }
 }
