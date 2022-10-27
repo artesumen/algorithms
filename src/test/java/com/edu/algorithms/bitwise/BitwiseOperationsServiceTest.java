@@ -71,4 +71,10 @@ class BitwiseOperationsServiceTest {
         Assertions.assertEquals(25, bitwiseOperationsService.multiply(5,5));
         Assertions.assertEquals(625, bitwiseOperationsService.multiply(25,25));
     }
+
+    @Test
+    void divide() {
+        Assertions.assertEquals(5,bitwiseOperationsService.divide(25,5));
+        Assertions.assertEquals(50,bitwiseOperationsService.divide(250,5));
+    }
 }

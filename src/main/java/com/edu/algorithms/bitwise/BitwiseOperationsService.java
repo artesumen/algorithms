@@ -148,26 +148,49 @@ public class BitwiseOperationsService {
 
     /**
      * Multiplies 2 integers with bitwise operations
+     * Addition takes O(n) time.
+     * Thhe whole algorithm takes O(n^2)
      *
      * @param x 1st arg
      * @param y 2nd arg
      * @return product of x and y
      */
-    //todo: Debug add method to clarify XOR operation. Debug shifting to clarify
     public long multiply(long x, long y) {
         long res = 0;
         while (x != 0) {
-            if ((x & 1) != 0) { // Проходимся по битам 1го числа
+            if ((x & 1) != 0) { // Проходимся по битам 1го числа. Если бит = 1 на позиции k, то прибавляем 2^k
                 res = add(res, y);
             }
-            x >>>= 1;
-            y <<= 1;
+            x >>>= 1; // Двигаем вправо для итерирования побитно
+            y <<= 1; // Двигаем влево, чтобы получить 2^k когда дойдем до 1 в 160й строке
         }
         return res;
     }
 
     private long add(long a, long b) {
-        return b == 0 ? a : add(a ^ b, (a & b) << 1);
+        return b == 0 ? a : add(a ^ b, (a & b) << 1); // XOR даст сложение чисел без увеличения разряда. (a & b) << 1 увеличит разряд для дальнейшего сложения и его увеличения (carry)
+    }
+
+    /**
+     * Divides x by y
+     *
+     * @param x first arg
+     * @param y second arg
+     * @return quotient
+     */
+    public int divide(int x, int y) {
+        int power = 32;
+        long yPower = (long) y << power;
+        int result = 0;
+        while (x >= y) {
+            while (yPower > x) {
+                yPower >>>= 1;
+                --power;
+            }
+            result += 1 << power;
+            x -= yPower;
+        }
+        return result;
     }
 
 }
