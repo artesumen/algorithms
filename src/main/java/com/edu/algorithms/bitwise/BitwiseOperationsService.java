@@ -173,6 +173,7 @@ public class BitwiseOperationsService {
 
     /**
      * Divides x by y
+     * O(n)
      *
      * @param x first arg
      * @param y second arg
@@ -191,6 +192,72 @@ public class BitwiseOperationsService {
             x -= yPower;
         }
         return result;
+    }
+
+    /**
+     * Counts the x^y ignoring overflow
+     * The number of multiplication is at most twice of MSB
+     * O(n)
+     *
+     * @param x arg
+     * @param y power
+     * @return x^y
+     */
+    public double power(double x, int y) {
+        double result = 1.0;
+        long power = y;
+        if (y < 0) {
+            power = -power;
+            x = 1.0 / x;
+        }
+        while (power != 0) {
+            if ((power & 1) != 0) { //Проверяем на нечетность
+                result *= x;
+            }
+            x *= x;
+            power >>>= 1;
+        }
+        return result;
+    }
+
+    /**
+     * Reverses the input integer
+     * O(n), n - number of digits
+     *
+     * @param x 32-bit integer
+     * @return reversed integer
+     */
+    public long reverse(int x) {
+        long result = 0;
+        while (x != 0) {
+            result = result * 10 + x % 10; // Остаток от деления на 10 даст самую правую цифру в числе.Умножая на 10 мы двигаем существующее число выше на разряд
+            x /= 10;
+        }
+        return result;
+    }
+
+    /**
+     * Checks if the input number is a palindrome
+     *
+     * @param input 32-bit integer
+     * @return true if the input is a palindrome, false otherwise
+     */
+    public boolean isPalindrome(int input) {
+        if (input <= 0) {
+            return input == 0;
+        }
+        int numOfDigits = (int) (Math.floor(Math.log10(input)) + 1); // Считаем разрядность числа
+        int msdMask = (int) Math.pow(10, numOfDigits - 1); // Маска, чтобы вычислять наибольший разряд (левую цифру числа)
+
+        for (int i = 0; i < (numOfDigits / 2); i++) { // Итерируемся до середины
+            if (input / msdMask != input % 10) { // Сверяем самый левый и самый правый разряд
+                return false;
+            }
+            input %= msdMask; // Убираем бОльший разряд
+            input /= 10; // Убираем меньший разряд
+            msdMask /= 100; // Обновляем маску
+        }
+        return true;
     }
 
 }

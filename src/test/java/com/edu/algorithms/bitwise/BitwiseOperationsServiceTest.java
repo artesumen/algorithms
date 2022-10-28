@@ -77,4 +77,22 @@ class BitwiseOperationsServiceTest {
         Assertions.assertEquals(5,bitwiseOperationsService.divide(25,5));
         Assertions.assertEquals(50,bitwiseOperationsService.divide(250,5));
     }
+
+    @Test
+    void power() {
+        Assertions.assertEquals(625.0,bitwiseOperationsService.power(25.0,2));
+        Assertions.assertEquals(-9.372983174258334,bitwiseOperationsService.power(-1.5645,5));
+    }
+
+    @Test
+    void reverse() {
+        Assertions.assertEquals(12345,bitwiseOperationsService.reverse(54321));
+    }
+
+    @Test
+    void isPalindrome() {
+        Assertions.assertTrue(bitwiseOperationsService.isPalindrome(123321));
+        Assertions.assertFalse(bitwiseOperationsService.isPalindrome(-123321));
+        Assertions.assertFalse(bitwiseOperationsService.isPalindrome(123421));
+    }
 }
