@@ -2,6 +2,8 @@ package com.edu.algorithms.bitwise;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 public class BitwiseOperationsService {
 
@@ -238,6 +240,8 @@ public class BitwiseOperationsService {
 
     /**
      * Checks if the input number is a palindrome
+     * O(n) time complexity
+     * As alternative we can use @reverse(int x) for check
      *
      * @param input 32-bit integer
      * @return true if the input is a palindrome, false otherwise
@@ -258,6 +262,32 @@ public class BitwiseOperationsService {
             msdMask /= 100; // Обновляем маску
         }
         return true;
+    }
+
+    /**
+     * Generates random number in bounds inclusive
+     * Uses random generator of 2 numbers
+     * O(log(b-a+1)) time
+     *
+     * @param lowerBound lower bound
+     * @param upperBound upper bound
+     * @return random number in range inclusive
+     */
+    public int uniformRandom(int lowerBound, int upperBound) {
+        int numberOfOutcomes = upperBound - lowerBound + 1; // Количество чисел, в которые можем попасть
+        int result;
+        do {
+            result = 0; // Сбрасываем в ноль, если вышли за рамки
+            for (int i = 0; (1 << i) < numberOfOutcomes; i++) { // Сеттим биты слева направо случайными значениями из генератора
+                result = (result << 1) | zeroOneRandom();
+            }
+        }
+        while (result >= numberOfOutcomes);
+        return result + lowerBound;
+    }
+
+    private int zeroOneRandom() {
+        return new Random().nextInt(2);
     }
 
 }

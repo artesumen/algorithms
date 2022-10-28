@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @SpringBootTest
 class BitwiseOperationsServiceTest {
 
@@ -24,12 +29,12 @@ class BitwiseOperationsServiceTest {
 
     @Test
     void clearLowermostBit() {
-        Assertions.assertEquals(BINARY_NUMBER_0,bitwiseOperationsService.clearLowermostBit(BINARY_NUMBER_1));
+        Assertions.assertEquals(BINARY_NUMBER_0, bitwiseOperationsService.clearLowermostBit(BINARY_NUMBER_1));
     }
 
     @Test
     void showBitOnThePosition() {
-        System.out.println(1<<(5-1)); // 10000(2), 16(10), 5я позиция
+        System.out.println(1 << (5 - 1)); // 10000(2), 16(10), 5я позиция
         Assertions.assertTrue(bitwiseOperationsService.showBitOnThePosition(BINARY_NUMBER_0, 2));
         Assertions.assertFalse(bitwiseOperationsService.showBitOnThePosition(BINARY_NUMBER_0, 1));
     }
@@ -53,40 +58,40 @@ class BitwiseOperationsServiceTest {
 
     @Test
     void swapBits() {
-        Assertions.assertEquals(BINARY_NUMBER_1_SWAPPED, bitwiseOperationsService.swapBits(BINARY_NUMBER_1,11,12));
+        Assertions.assertEquals(BINARY_NUMBER_1_SWAPPED, bitwiseOperationsService.swapBits(BINARY_NUMBER_1, 11, 12));
     }
 
     @Test
     void reverseBits() {
-        Assertions.assertEquals(BINARY_NUMBER_1_REVERSED,bitwiseOperationsService.reverseBits(BINARY_NUMBER_1));
+        Assertions.assertEquals(BINARY_NUMBER_1_REVERSED, bitwiseOperationsService.reverseBits(BINARY_NUMBER_1));
     }
 
     @Test
     void getClosestIntSameBitCount() {
-        Assertions.assertEquals(BINARY_NUMBER_1_CLOSEST,bitwiseOperationsService.getClosestIntSameBitCount(BINARY_NUMBER_1));
+        Assertions.assertEquals(BINARY_NUMBER_1_CLOSEST, bitwiseOperationsService.getClosestIntSameBitCount(BINARY_NUMBER_1));
     }
 
     @Test
     void multiply() {
-        Assertions.assertEquals(25, bitwiseOperationsService.multiply(5,5));
-        Assertions.assertEquals(625, bitwiseOperationsService.multiply(25,25));
+        Assertions.assertEquals(25, bitwiseOperationsService.multiply(5, 5));
+        Assertions.assertEquals(625, bitwiseOperationsService.multiply(25, 25));
     }
 
     @Test
     void divide() {
-        Assertions.assertEquals(5,bitwiseOperationsService.divide(25,5));
-        Assertions.assertEquals(50,bitwiseOperationsService.divide(250,5));
+        Assertions.assertEquals(5, bitwiseOperationsService.divide(25, 5));
+        Assertions.assertEquals(50, bitwiseOperationsService.divide(250, 5));
     }
 
     @Test
     void power() {
-        Assertions.assertEquals(625.0,bitwiseOperationsService.power(25.0,2));
-        Assertions.assertEquals(-9.372983174258334,bitwiseOperationsService.power(-1.5645,5));
+        Assertions.assertEquals(625.0, bitwiseOperationsService.power(25.0, 2));
+        Assertions.assertEquals(-9.372983174258334, bitwiseOperationsService.power(-1.5645, 5));
     }
 
     @Test
     void reverse() {
-        Assertions.assertEquals(12345,bitwiseOperationsService.reverse(54321));
+        Assertions.assertEquals(12345, bitwiseOperationsService.reverse(54321));
     }
 
     @Test
@@ -94,5 +99,13 @@ class BitwiseOperationsServiceTest {
         Assertions.assertTrue(bitwiseOperationsService.isPalindrome(123321));
         Assertions.assertFalse(bitwiseOperationsService.isPalindrome(-123321));
         Assertions.assertFalse(bitwiseOperationsService.isPalindrome(123421));
+    }
+
+    @Test
+    void uniformRandom() {
+        List<Integer> integerList = IntStream.range(1, 10).boxed().collect(Collectors.toList());
+        for (int i = 0; i < 20; i++) {
+            Assertions.assertTrue(integerList.contains(bitwiseOperationsService.uniformRandom(1, 9)));
+        }
     }
 }
