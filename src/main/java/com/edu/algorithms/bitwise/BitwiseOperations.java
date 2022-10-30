@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.Random;
 
 @Service
-public class BitwiseOperationsService {
+public class BitwiseOperations {
 
     /**
      * Counts the number of bits in integer
