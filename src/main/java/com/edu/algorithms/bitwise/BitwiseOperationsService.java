@@ -1,5 +1,7 @@
 package com.edu.algorithms.bitwise;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -103,7 +105,6 @@ public class BitwiseOperationsService {
      * @return integer with swapped bits
      */
     public long swapBits(long input, int i, int j) {
-        String s = Long.toBinaryString(input);
         if (((input >>> i) & 1) != ((input >>> j) & 1)) { // Вытаскиваем биты на позициях i и j и сравниваем их
             long bitMask = (1L << i) | (1L << j); // Маска содержит биты на тех местах, которые надо поменять
             input ^= bitMask; // ХОР поменяет значение битов на противоположные
@@ -267,7 +268,7 @@ public class BitwiseOperationsService {
     /**
      * Generates random number in bounds inclusive
      * Uses random generator of 2 numbers
-     * O(log(b-a+1)) time
+     * O(log(b-a+1)) time-
      *
      * @param lowerBound lower bound
      * @param upperBound upper bound
@@ -290,4 +291,39 @@ public class BitwiseOperationsService {
         return new Random().nextInt(2);
     }
 
+    @EqualsAndHashCode // !!!!!!!!!!
+    @ToString
+    public static class Rect {
+        int x, y, width, height;
+
+        public Rect(int x, int y, int width, int height) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+    }
+
+    /**
+     * Checks if two rectangles have a non-empty intersection
+     * If yes, returns rectangle formed by this intersection
+     * O(1), since the number of operations is constant
+     *
+     * @param r1 first rectangle
+     * @param r2 second rectangle
+     * @return intersection rectangle if there is any, Rect(0, 0, -1, -1) otherwise
+     */
+    public Rect intersectRectangle(Rect r1, Rect r2) {
+        if (!isIntersect(r1, r2)) {
+            return new Rect(0, 0, -1, -1); // Нет пересечений
+        }
+        return new Rect(Math.max(r1.x, r2.x), Math.max(r1.y, r2.y),
+                Math.min(r1.x + r1.width, r2.x + r2.width) - Math.max(r1.x, r2.x), // Math.min(r1.x + r1.width, r2.x + r2.width) Считает длину начиная от оси координат. ПОэтому мы вычитаем наибольшую координату, чтобы рассчитать длину меньшего прямоугольника
+                Math.min(r1.y + r1.height, r2.y + r2.height) - Math.max(r1.y, r2.y)); // Аналогично предыдущему
+    }
+
+    private boolean isIntersect(Rect r1, Rect r2) {
+        return r1.x <= r2.x + r2.width && r1.x + r1.width >= r2.x &&
+                r1.y <= r2.y + r2.height && r2.y <= r1.y + r1.height;  // Проверяем, что высота и ширина по координатам (не) пересекается
+    }
 }

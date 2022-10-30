@@ -1,11 +1,11 @@
 package com.edu.algorithms.bitwise;
 
+import com.edu.algorithms.bitwise.BitwiseOperationsService.Rect;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -21,6 +21,12 @@ class BitwiseOperationsServiceTest {
     private static final int BINARY_NUMBER_1_SWAPPED = 0b0000_1011_0010_1111;
 
     private static final int BINARY_NUMBER_1_REVERSED = Integer.reverse(BINARY_NUMBER_1);
+
+    private static final Rect INITIAL_RECT = new Rect(1, 2, 3, 2);
+    private static final Rect RECTANGLE_WITH_INTERSECTION = new Rect(2, 2, 2, 4);
+    private static final Rect INTERSECTION_RECTANGLE = new Rect(2, 2, 2, 2);
+    private static final Rect RECTANGLE_WITHOUT_INTERSECTION = new Rect(5, 2, 5, 4);
+    private static final Rect INTERSECTION_ABSCENCE = new Rect(0, 0, -1, -1);
 
     @Test
     void suboptimalCountBits() {
@@ -107,5 +113,11 @@ class BitwiseOperationsServiceTest {
         for (int i = 0; i < 20; i++) {
             Assertions.assertTrue(integerList.contains(bitwiseOperationsService.uniformRandom(1, 9)));
         }
+    }
+
+    @Test
+    void intersectRectangle() {
+        Assertions.assertEquals(INTERSECTION_RECTANGLE, bitwiseOperationsService.intersectRectangle(INITIAL_RECT, RECTANGLE_WITH_INTERSECTION));
+        Assertions.assertEquals(INTERSECTION_ABSCENCE, bitwiseOperationsService.intersectRectangle(INITIAL_RECT, RECTANGLE_WITHOUT_INTERSECTION));
     }
 }
