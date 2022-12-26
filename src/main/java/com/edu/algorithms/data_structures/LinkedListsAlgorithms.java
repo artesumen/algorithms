@@ -13,7 +13,11 @@ public class LinkedListsAlgorithms {
 
 class AwesomeLinkedList<T> implements Iterable<T> {
     private Node<T> head, tail;
-    private int size;
+    public int size;
+
+    public int getSize() {
+        return size;
+    }
 
     public AwesomeLinkedList() {
     }
@@ -37,20 +41,36 @@ class AwesomeLinkedList<T> implements Iterable<T> {
         return L;
     }
 
-    public void removeNextNode(Node<T> node) {
+    public void remove(int index) {
+        if (index < size) {
+            if (index > 0) {
+                var el = getNodeByIndex(index - 1);
+                removeNextNode(el);
+            } else {
+                this.head = head.getNext();
+            }
+        }
+        --size;
+    }
+
+    private void removeNextNode(Node<T> node) {
         node.setNext(node.getNext().getNext());
     }
 
-    public T get(int index) {
+    private Node<T> getNodeByIndex(int index) {
         if (index < size) {
             var node = this.head;
             for (int i = 0; i < index; i++) {
                 node = node.getNext();
             }
-            return node.getData();
+            return node;
         } else {
             throw new RuntimeException("Out of bounds!");
         }
+    }
+
+    public T get(int index) {
+        return getNodeByIndex(index).getData();
     }
 
     public Node<T> getHead() {
