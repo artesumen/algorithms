@@ -13,6 +13,7 @@ public class LinkedListsAlgorithms {
 
 class AwesomeLinkedList<T> implements Iterable<T> {
     private Node<T> head, tail;
+    private int size;
 
     public AwesomeLinkedList() {
     }
@@ -26,17 +27,30 @@ class AwesomeLinkedList<T> implements Iterable<T> {
         } else {
             t.setNext(newNode);
         }
+        ++size;
     }
 
-    public Node<T> searchNode(Node<T> L, T key){
-        while(L != null && !L.getData().equals(key)){
+    public Node<T> searchNode(Node<T> L, T key) {
+        while (L != null && !L.getData().equals(key)) {
             L = L.getNext();
         }
         return L;
     }
 
-    public void removeNextNode(Node<T> node){
+    public void removeNextNode(Node<T> node) {
         node.setNext(node.getNext().getNext());
+    }
+
+    public T get(int index) {
+        if (index < size) {
+            var node = this.head;
+            for (int i = 0; i < index; i++) {
+                node = node.getNext();
+            }
+            return node.getData();
+        } else {
+            throw new RuntimeException("Out of bounds!");
+        }
     }
 
     public Node<T> getHead() {
@@ -50,6 +64,15 @@ class AwesomeLinkedList<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new ListIterator<>(this);
+    }
+
+    @Override
+    public String toString() {
+        var sb = new StringBuilder();
+        for (T t : this) {
+            sb.append(t + " ");
+        }
+        return sb.toString();
     }
 }
 
@@ -83,7 +106,7 @@ class ListIterator<T> implements Iterator<T> {
     private Node<T> current;
 
     public ListIterator(AwesomeLinkedList<T> list) {
-        current = new Node<>(list.getHead(),null);
+        current = new Node<>(list.getHead(), null);
     }
 
     @Override
