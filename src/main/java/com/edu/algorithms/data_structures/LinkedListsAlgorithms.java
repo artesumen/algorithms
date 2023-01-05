@@ -12,7 +12,7 @@ public class LinkedListsAlgorithms {
 }
 
 class AwesomeLinkedList<T> implements Iterable<T> {
-    private Node<T> head, tail;
+    private ListNode<T> head, tail;
     public int size;
 
     public int getSize() {
@@ -23,18 +23,18 @@ class AwesomeLinkedList<T> implements Iterable<T> {
     }
 
     public void add(T data) {
-        final Node<T> t = tail;
-        Node<T> newNode = new Node<>(null, data);
-        tail = newNode;
+        final ListNode<T> t = tail;
+        ListNode<T> newListNode = new ListNode<>(null, data);
+        tail = newListNode;
         if (t == null) {
-            head = newNode;
+            head = newListNode;
         } else {
-            t.setNext(newNode);
+            t.setNext(newListNode);
         }
         ++size;
     }
 
-    public Node<T> searchNode(Node<T> L, T key) {
+    public ListNode<T> searchNode(ListNode<T> L, T key) {
         while (L != null && !L.getData().equals(key)) {
             L = L.getNext();
         }
@@ -53,11 +53,11 @@ class AwesomeLinkedList<T> implements Iterable<T> {
         --size;
     }
 
-    private void removeNextNode(Node<T> node) {
-        node.setNext(node.getNext().getNext());
+    private void removeNextNode(ListNode<T> listNode) {
+        listNode.setNext(listNode.getNext().getNext());
     }
 
-    private Node<T> getNodeByIndex(int index) {
+    private ListNode<T> getNodeByIndex(int index) {
         if (index < size) {
             var node = this.head;
             for (int i = 0; i < index; i++) {
@@ -73,11 +73,11 @@ class AwesomeLinkedList<T> implements Iterable<T> {
         return getNodeByIndex(index).getData();
     }
 
-    public Node<T> getHead() {
+    public ListNode<T> getHead() {
         return head;
     }
 
-    public void setHead(Node<T> head) {
+    public void setHead(ListNode<T> head) {
         this.head = head;
     }
 
@@ -96,20 +96,20 @@ class AwesomeLinkedList<T> implements Iterable<T> {
     }
 }
 
-class Node<T> {
-    private Node<T> next;
+class ListNode<T> {
+    private ListNode<T> next;
     private T data;
 
-    public Node(Node<T> next, T data) {
+    public ListNode(ListNode<T> next, T data) {
         this.next = next;
         this.data = data;
     }
 
-    public Node<T> getNext() {
+    public ListNode<T> getNext() {
         return next;
     }
 
-    public void setNext(Node<T> next) {
+    public void setNext(ListNode<T> next) {
         this.next = next;
     }
 
@@ -123,10 +123,10 @@ class Node<T> {
 }
 
 class ListIterator<T> implements Iterator<T> {
-    private Node<T> current;
+    private ListNode<T> current;
 
     public ListIterator(AwesomeLinkedList<T> list) {
-        current = new Node<>(list.getHead(), null);
+        current = new ListNode<>(list.getHead(), null);
     }
 
     @Override
