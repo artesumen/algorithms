@@ -1,5 +1,7 @@
 package com.edu.algorithms.data_structures;
 
+import java.util.ArrayDeque;
+
 public class StacksAlgorithms {
     public static void main(String[] args) {
         AwesomeStack<String> s = new AwesomeStack<>();
@@ -42,13 +44,13 @@ class AwesomeStack<T> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        var iter = head.next;
-        if (iter == null) {
+        var printer = head.next;
+        if (printer == null) {
             return "Stack is empty";
         }
-        while (iter != null) {
-            sb.append(iter.data);
-            iter = iter.next;
+        while (printer != null) {
+            sb.append(printer.data);
+            printer = printer.next;
         }
         return sb.toString();
     }
