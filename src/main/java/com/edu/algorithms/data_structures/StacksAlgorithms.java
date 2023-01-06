@@ -1,7 +1,14 @@
 package com.edu.algorithms.data_structures;
 
-import java.util.ArrayDeque;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Objects;
+
+@Service
+@RequiredArgsConstructor
 public class StacksAlgorithms {
     public static void main(String[] args) {
         AwesomeStack<String> s = new AwesomeStack<>();
@@ -15,6 +22,15 @@ public class StacksAlgorithms {
             s.pop();
         }
         System.out.println(s);
+        var stack = new ArrayDequeStackWithMax();
+        for (int i = 1; i <= 3; i++) {
+            stack.push(i);
+        }
+        stack.push(2);
+        System.out.println(stack.max());
+        stack.pop();
+        stack.pop();
+        System.out.println(stack.max());
 
     }
 }
@@ -69,5 +85,40 @@ class Node<T> {
     @Override
     public String toString() {
         return data != null ? data.toString() : "null";
+    }
+}
+
+class CachedMaxElement {
+    Integer element;
+    Integer max;
+
+    public CachedMaxElement(Integer element, Integer max) {
+        this.element = element;
+        this.max = max;
+    }
+}
+
+class ArrayDequeStackWithMax {
+    private final Deque<CachedMaxElement> arr = new ArrayDeque<>();
+
+    public boolean empty() {
+        return arr.isEmpty();
+    }
+
+    public Integer max() {
+        if (!empty()) {
+            return Objects.requireNonNull(arr.peek()).max;
+        } else {
+            throw new RuntimeException("Empty Stack");
+        }
+    }
+
+    public void push(Integer data) {
+        CachedMaxElement e = new CachedMaxElement(data, Math.max(data, empty() ? data : max()));
+        arr.addFirst(e);
+    }
+
+    public Integer pop(){
+        return arr.removeFirst().element;
     }
 }
