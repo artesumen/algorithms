@@ -3,36 +3,66 @@ package com.edu.algorithms.data_structures;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class StacksAlgorithms {
     public static void main(String[] args) {
-        AwesomeStack<String> s = new AwesomeStack<>();
-        for (int i = 0; i < 10; i++) {
-            s.push("Adding: " + i + " ");
-        }
-        System.out.println(s);
-        System.out.println();
-        System.out.println("-------------");
-        for (int i = 0; i < 5; i++) {
-            s.pop();
-        }
-        System.out.println(s);
-        var stack = new ArrayDequeStackWithMax();
-        for (int i = 1; i <= 3; i++) {
-            stack.push(i);
-        }
-        stack.push(2);
-        System.out.println(stack.max());
-        stack.pop();
-        stack.pop();
-        System.out.println(stack.max());
-
+        System.out.println(getViewedBuildings(Arrays.asList(3, 2, 3, 4, 1).iterator()));
+        System.out.println(optimizePathname("C/././Hello/.."));
     }
+
+    public static List<Integer> getViewedBuildings(Iterator<Integer> sequence) {
+        Deque<Building> candidates = new ArrayDeque<>();
+        int idx = 0;
+        while (sequence.hasNext()) {
+            int currentHeight = sequence.next();
+            while (!candidates.isEmpty() && currentHeight >= candidates.peek().height) {
+                candidates.removeFirst();
+            }
+            candidates.addFirst(new Building(idx++, currentHeight));
+        }
+        return candidates.stream().map(b -> b.id).collect(Collectors.toList());
+    }
+
+    public static String optimizePathname(String pathname) {
+        Deque<String> tokens = new ArrayDeque<>();
+        if (pathname.startsWith("/")) {
+            tokens.addFirst("/");
+        }
+
+        for (String token : pathname.split("/")) {
+            if (token.equals("..")) {
+                if(tokens.isEmpty() || tokens.peekFirst().equals("..")){
+                    tokens.addFirst(token);
+                }
+                else{
+                    if(tokens.peekFirst().equals("/")){
+                        throw new RuntimeException("Cannot go up the root");
+                    }
+                    tokens.removeFirst();
+                }
+            }
+            if (!token.equals(".") && !token.isEmpty()) {
+                tokens.addFirst(token);
+            }
+        }
+
+        Iterator<String> iter = tokens.descendingIterator();
+        StringBuilder res = new StringBuilder();
+        while (iter.hasNext()) {
+            if (tokens.peekFirst().equals("/")) {
+                res.append("/");
+            }
+            String next = iter.next();
+            res.append(next);
+            res.append("/");
+        }
+        return res.toString();
+    }
+
 }
 
 class AwesomeStack<T> {
@@ -118,7 +148,17 @@ class ArrayDequeStackWithMax {
         arr.addFirst(e);
     }
 
-    public Integer pop(){
+    public Integer pop() {
         return arr.removeFirst().element;
+    }
+}
+
+class Building {
+    int height;
+    int id;
+
+    public Building(int height, int id) {
+        this.height = height;
+        this.id = id;
     }
 }
