@@ -39,9 +39,9 @@ class BinaryTreeNode<T> {
 
     public static void inOrderTraversal(BinaryTreeNode root) {
         if (root != null) {
-            preOrderTraversal(root.left);
+            inOrderTraversal(root.left);
             System.out.println(root.data);
-            preOrderTraversal(root.right);
+            inOrderTraversal(root.right);
         }
 
 
@@ -49,8 +49,8 @@ class BinaryTreeNode<T> {
 
     public static void postOrderTraversal(BinaryTreeNode root) {
         if(root != null){
-            preOrderTraversal(root.left);
-            preOrderTraversal(root.right);
+            postOrderTraversal(root.left);
+            postOrderTraversal(root.right);
             System.out.println(root.data);
         }
 
