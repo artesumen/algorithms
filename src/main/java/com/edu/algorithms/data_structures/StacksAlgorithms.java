@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class StacksAlgorithms {
     public static void main(String[] args) {
         System.out.println(getViewedBuildings(Arrays.asList(3, 2, 3, 4, 1).iterator()));
-        System.out.println(optimizePathname("C/././Hello/.."));
+        System.out.println(optimizePathname("./././Hello/.."));
     }
 
     public static List<Integer> getViewedBuildings(Iterator<Integer> sequence) {
