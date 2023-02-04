@@ -13,11 +13,29 @@ public class HashTable<T> {
         return size;
     }
 
+//    private void rehash() {
+//        int newSize = (int) (this.size * 1.5);
+//        buckets = Arrays.copyOf(buckets, newSize);
+//        for (LinkedList<T> bucket : buckets) {
+//            if (bucket == null) {
+//                bucket = new LinkedList<>();
+//            }
+//            for (T t : bucket) {
+//                bucket.remove(t);
+//                int idx = getIdx(t);
+//                buckets[idx].add(t);
+//            }
+//        }
+//    }
+
     private int size;
 
     public HashTable() {
-        int INITIAL_CAPACITY = 16;
+        int INITIAL_CAPACITY = 3;
         this.buckets = new LinkedList[INITIAL_CAPACITY];
+        for (LinkedList<T> bucket : buckets) {
+            bucket = new LinkedList<>();
+        }
     }
 
     public boolean isEmpty() {
@@ -30,8 +48,12 @@ public class HashTable<T> {
             buckets[idx] = new LinkedList<>();
         }
         if (!contains(data)) {
-            buckets[idx].add(data);
+//            double factor = (double) size / (double) buckets.length;
+//            if (factor > 0.75) {
+//                rehash();
+//            }
             size++;
+            buckets[idx].add(data);
             return true;
         }
         return false;
@@ -88,6 +110,8 @@ class Test {
         ht.add("world");
         ht.add("world");
         ht.add("!");
+        ht.add("!!");
+        ht.add("!15!");
         System.out.println(ht.size());
         System.out.println(ht);
 
